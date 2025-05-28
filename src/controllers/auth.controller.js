@@ -5,8 +5,17 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-export const register = async (email, password) => {
+export const register = async (req, res) => {
   try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return {
+        status: 400,
+        message: "Email and password are required",
+      };
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.create({
@@ -16,14 +25,10 @@ export const register = async (email, password) => {
       },
     });
 
-    return {
-      status: 201,
+    res.status(201).json({
       message: "User registered successfully",
-        user: {
-            id: user.id,
-            email: user.email,
-        },
-    };
+      
+    })
   } catch (error) {
     console.error("Error registering user:", error);
     return {
