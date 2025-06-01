@@ -5,14 +5,16 @@ import cors from 'cors'
 
 const app = e()
 
-app.use(e.json())
-app.use('/api/auth', authRoutes)
-
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }))
+
+app.use(e.json())
+
+app.use('/api/auth', authRoutes)
+
 
 const PORT = process.env.PORT
 
