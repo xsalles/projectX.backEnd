@@ -6,7 +6,7 @@ import cors from 'cors'
 const app = e()
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: '*',
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }))
